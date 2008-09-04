@@ -105,7 +105,7 @@ The following directory composition
   $ ls -R t/plugins
   t/plugins:
   empty.pm  foo  foo.pm  pod.pm  withcomment.pm  withpod.pm
-  
+
   t/plugins/foo:
   bar.pm  baz.plugin
 
@@ -115,7 +115,7 @@ The following code is executed
   use warnings;
   use Module::Collect;
   use Perl6::Say;
-  
+
   my $c = Module::Collect->new( path => 't/plugins' );
   for my $module (@{ $c->modules }) {
       say $module->{package} . ', ', $module->{path};
