@@ -21,3 +21,16 @@ MANIFEST			This list of files
 META.yml
 README
 t/00_compile.t
+t/01_collect.t
+t/02_pattern.t
+t/03_prefix.t
+t/04_somedir.t
+t/plugin1/one.pm
+t/plugin2/two.pm
+t/plugins/empty.pm
+t/plugins/foo.pm
+t/plugins/foo/bar.pm
+t/plugins/foo/baz.plugin
+t/plugins/pod.pm
+t/plugins/withcomment.pm
+t/plugins/withpod.pm
