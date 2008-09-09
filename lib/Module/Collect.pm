@@ -44,10 +44,10 @@ sub _add_module {
     my($self, $modulefile) = @_;
     my $package = $self->_extract_package($modulefile);
     return unless $package;
-    push @{ $self->{modules} },Module::Collect::Package->new({
+    push @{ $self->{modules} },Module::Collect::Package->new(
         package => $package,
         path    => $modulefile,
-    });
+    );
 }
 
 sub _extract_package {
@@ -95,8 +95,10 @@ Module::Collect - module files are collected from some directories
 
   my @modules = @{ $collect->modules };
   for my $module (@modules) {
-      print $module->{path};
-      print $module->{package};
+      print $module->path;    # package fuke oatg
+      print $module->package; # package name
+      $module->require;       # require package
+      my $obj = $module->new; # aliae for $module->package->new
   }
 
 =head1 DESCRIPTION
@@ -119,15 +121,16 @@ The following code is executed
 
   my $c = Module::Collect->new( path => 't/plugins' );
   for my $module (@{ $c->modules }) {
-      say $module->{package} . ', ', $module->{path};
+      say $module->package . ', ', $module->path;
+      $module->require;
   }
 
 results
 
-  MyApp::Foo, plugins/foo.pm
-  With::Comment, plugins/withcomment.pm
-  With::Pod, plugins/withpod.pm
-  MyApp::Foo::Bar, plugins/foo/bar.pm
+  MyApp::Foo, t/plugins/foo.pm
+  With::Comment, t/plugins/withcomment.pm
+  With::Pod, t/plugins/withpod.pm
+  MyApp::Foo::Bar, t/plugins/foo/bar.pm
 
 =head1 AUTHOR
 
@@ -136,6 +139,10 @@ Kazuhiro Osawa E<lt>ko@yappo.ne.jpE<gt>
 =head1 INSPIRED BY
 
 L<Plagger>, L<Module::Pluggable>
+
+=head1 SEE ALSO
+
+L<Module::Collect::Package>
 
 =head1 REPOSITORY
 
