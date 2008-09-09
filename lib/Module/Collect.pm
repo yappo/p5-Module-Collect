@@ -6,6 +6,7 @@ our $VERSION = '0.01';
 use Carp;
 use File::Find::Rule;
 use File::Spec::Functions;
+use Module::Collect::Package;
 
 sub new {
     my($class, %args) = @_;
@@ -31,7 +32,7 @@ sub _find_modules {
         my $rule = File::Find::Rule->new;
         $rule->file;
         $rule->name($self->{pattern});
-	
+
         my @modules = $rule->in($dirpath);
         for my $modulefile (@modules) {
             $self->_add_module($modulefile);
@@ -43,10 +44,10 @@ sub _add_module {
     my($self, $modulefile) = @_;
     my $package = $self->_extract_package($modulefile);
     return unless $package;
-    push @{ $self->{modules} }, +{
+    push @{ $self->{modules} },Module::Collect::Package->new({
         package => $package,
         path    => $modulefile,
-    };
+    });
 }
 
 sub _extract_package {
