@@ -1,4 +1,7 @@
 Revision history for Perl extension Module::Collect
 
+0.02    2008-09-09T12:18:01+09:00
+        - add Module::Collect::Package lopnor++
+
 0.01    2008-09-04T16:28:43+09:00
         - original version

@@ -16,6 +16,7 @@ inc/Test/Builder.pm
 inc/Test/Builder/Module.pm
 inc/Test/More.pm
 lib/Module/Collect.pm
+lib/Module/Collect/Package.pm
 Makefile.PL
 MANIFEST			This list of files
 META.yml
@@ -25,8 +26,10 @@ t/01_collect.t
 t/02_pattern.t
 t/03_prefix.t
 t/04_somedir.t
+t/05_require.t
 t/plugin1/one.pm
 t/plugin2/two.pm
+t/plugin2/two2.pm
 t/plugins/empty.pm
 t/plugins/foo.pm
 t/plugins/foo/bar.pm
