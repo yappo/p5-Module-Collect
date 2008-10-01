@@ -8,7 +8,7 @@ use Module::Collect;
 
 my $collect = Module::Collect->new( path => [ catfile('t', 'plugin1'), catfile('t', 'plugin2') ]);
 
-my $module = $collect->modules->[0];
+my($module) = grep { $_->package eq 'One' } @{ $collect->modules };
 isa_ok $module, 'Module::Collect::Package';
 ok $module->require;
 ok grep {$_ eq catfile('t', 'plugin1', 'one.pm')} keys %INC;
@@ -20,7 +20,7 @@ isa_ok $obj, 'One';
 my $obj2 = $module->new({one => 2});
 is $obj2->one, 2;
 
-my $module2 = $collect->modules->[1];
+my($module2) = grep { $_->package eq 'Two' } @{ $collect->modules };
 $module2->require;
 do {
     local $@;
@@ -31,7 +31,7 @@ is $module2->package->two, 2;
 is $module2->path, catfile(qw/ t plugin2 two.pm/);
 is $module2->package, 'Two';
 
-my $module3 = $collect->modules->[2];
+my($module3) = grep { $_->package eq 'two2' } @{ $collect->modules };
 do {
     local $@;
     eval { $module3->require };
