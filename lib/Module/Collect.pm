@@ -24,7 +24,7 @@ sub _find_modules {
     my $self = shift;
 
     my $path = $self->{path} || [];
-       $path = [ $path ] unless ref $path;
+       $path = [ $path ] unless ref($path) eq 'ARRAY';
 
     for my $dirpath (@{ $path }) {
         next unless -d $dirpath;
