@@ -1,8 +1,10 @@
 Revision history for Perl extension Module::Collect
 
+0.04    2008-10-02T11:30:08+09:00
+        - Path::Class friendly
+
 0.03    2008-10-01T23:36:38+09:00
         - fix t/05_require.t
-        - Path::Class friendly
 
 0.02    2008-09-09T12:18:01+09:00
         - add Module::Collect::Package lopnor++
