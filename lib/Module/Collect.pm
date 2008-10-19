@@ -42,12 +42,14 @@ sub _find_modules {
 
 sub _add_module {
     my($self, $modulefile) = @_;
-    my $package = $self->_extract_package($modulefile);
-    return unless $package;
-    push @{ $self->{modules} },Module::Collect::Package->new(
-        package => $package,
-        path    => $modulefile,
-    );
+    my @packages = $self->_extract_package($modulefile);
+    return unless @packages;
+    for (@packages) {
+        push @{ $self->{modules} },Module::Collect::Package->new(
+            package => $_,
+            path    => $modulefile,
+        );
+    }
 }
 
 sub _extract_package {
@@ -59,15 +61,16 @@ sub _extract_package {
     $prefix = '' unless $prefix;
 
     my $in_pod = 0;
+    my @packages;
     while (<$fh>) {
         $in_pod = 1 if m/^=\w/;
         $in_pod = 0 if /^=cut/;
         next if ($in_pod || /^=cut/);  # skip pod text
         next if /^\s*\#/;
 
-        /^\s*package\s+($prefix.*?)\s*;/ and return $1;
+        /^\s*package\s+($prefix.*?)\s*;/ and push @packages, $1;
     }
-    return;
+    return @packages;
 }
 
 sub modules {
