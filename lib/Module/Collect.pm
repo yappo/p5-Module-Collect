@@ -5,7 +5,6 @@ our $VERSION = '0.04';
 
 use Carp;
 use File::Find::Rule;
-use File::Spec::Functions;
 use Module::Collect::Package;
 
 sub new {

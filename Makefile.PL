@@ -4,9 +4,11 @@ all_from 'lib/Module/Collect.pm';
 
 requires 'Carp';
 requires 'File::Find::Rule';
-requires 'File::Spec::Functions';
 
 build_requires 'Test::More';
+build_requires 'File::Spec';
+build_requires 'File::Spec::Functions';
+
 use_test_base;
 auto_include;
 WriteAll;
