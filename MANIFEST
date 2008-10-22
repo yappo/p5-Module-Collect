@@ -1,4 +1,6 @@
 Changes
+inc/File/Spec.pm
+inc/File/Spec/Functions.pm
 inc/Module/Install.pm
 inc/Module/Install/Base.pm
 inc/Module/Install/Can.pm
@@ -27,9 +29,11 @@ t/02_pattern.t
 t/03_prefix.t
 t/04_somedir.t
 t/05_require.t
+t/06_multiple.t
 t/plugin1/one.pm
 t/plugin2/two.pm
 t/plugin2/two2.pm
+t/plugin3/three.pm
 t/plugins/empty.pm
 t/plugins/foo.pm
 t/plugins/foo/bar.pm

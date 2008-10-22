@@ -17,3 +17,5 @@
 ^[^/]+\.yaml$
 ^[^/]+\.pl$
 ^\.shipit$
+^coverage_test.sh$
+^cover_db_view/
