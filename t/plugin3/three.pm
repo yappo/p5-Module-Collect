@@ -9,6 +9,7 @@ sub new {
 sub three { shift->{three} }
 
 package ThreeBar;
+sub new { bless +{}, shift };
 sub three {1}
 
 1;
