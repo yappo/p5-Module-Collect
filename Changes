@@ -1,5 +1,8 @@
 Revision history for Perl extension Module::Collect
 
+0.05    2008-10-22T19:10:24+09:00
+        - multiple package support lopnor++
+
 0.04    2008-10-02T11:30:08+09:00
         - Path::Class friendly
 
