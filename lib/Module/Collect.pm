@@ -59,6 +59,22 @@ sub _extract_package {
     $prefix .= '::' if $prefix;
     $prefix = '' unless $prefix;
 
+    return _extract_multiple_package($fh, $prefix) if $self->{multiple};
+    my $in_pod = 0;
+    while (<$fh>) {
+        $in_pod = 1 if m/^=\w/;
+        $in_pod = 0 if /^=cut/;
+        next if ($in_pod || /^=cut/);  # skip pod text
+        next if /^\s*\#/;
+
+        /^\s*package\s+($prefix.*?)\s*;/ and return $1;
+    }
+    return;
+}
+
+sub _extract_multiple_package {
+    my($fh, $prefix) = @_;
+
     my $in_pod = 0;
     my @packages;
     while (<$fh>) {
@@ -93,6 +109,7 @@ Module::Collect - module files are collected from some directories
       path   => '/foo/bar/plugins',
       prefix => 'MyApp::Plugin', # not required option
       pattern => '*.pm',         # not required option
+      multiple => 1,             # not required option see t/06_multiple.t
   );
 
   my @modules = @{ $collect->modules };

@@ -1,12 +1,24 @@
 use strict;
 use warnings;
-use Test::More tests => 14;
+use Test::More tests => 21;
 
 use File::Spec::Functions;
 
 use Module::Collect;
 
-my $collect = Module::Collect->new( path => [ catfile('t', 'plugin3') ] );
+do {
+    my $collect = Module::Collect->new( path => [ catfile('t', 'plugin3') ] );
+    is @{ $collect->modules }, 1;
+    is $collect->modules->[0]->package, 'Three';
+    is $collect->modules->[1], undef;
+};
+
+
+my $collect = Module::Collect->new( path => [ catfile('t', 'plugin3') ], multiple => 1 );
+is @{ $collect->modules }, 3;
+is $collect->modules->[0]->package, 'Three';
+is $collect->modules->[1]->package, 'Three::Bar';
+is $collect->modules->[2]->package, 'ThreeBar';
 
 do {
     my ($module) = grep { $_->package eq 'Three::Bar' } @{ $collect->modules };
