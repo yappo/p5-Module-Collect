@@ -44,7 +44,7 @@ sub _add_module {
     my @packages = $self->_extract_package($modulefile);
     return unless @packages;
     for (@packages) {
-        push @{ $self->{modules} },Module::Collect::Package->new(
+        push @{ $self->{modules} }, Module::Collect::Package->new(
             package => $_,
             path    => $modulefile,
         );
