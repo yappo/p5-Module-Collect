@@ -5,6 +5,7 @@ our $VERSION = '0.05';
 
 use Carp;
 use File::Find::Rule;
+use File::Spec::Functions qw/catfile/;
 use Module::Collect::Package;
 
 sub new {
@@ -32,7 +33,7 @@ sub _find_modules {
         $rule->file;
         $rule->name($self->{pattern});
 
-        my @modules = $rule->in($dirpath);
+        my @modules = map {catfile $_} $rule->in($dirpath);
         for my $modulefile (@modules) {
             $self->_add_module($modulefile);
         }
