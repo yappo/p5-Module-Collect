@@ -19,3 +19,5 @@
 ^\.shipit$
 ^coverage_test.sh$
 ^cover_db_view/
+^\.git/
+.gitignore

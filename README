@@ -1,27 +1,69 @@
-This is Perl module Module::Collect.
+NAME
+    Module::Collect - module files are collected from some directories
 
-INSTALLATION
+SYNOPSIS
+      use Module::Collect;
+      my $collect = Module::Collect->new(
+          path   => '/foo/bar/plugins',
+          prefix => 'MyApp::Plugin', # not required option
+          pattern => '*.pm',         # not required option
+          multiple => 1,             # not required option see t/06_multiple.t
+      );
 
-Module::Collect installation is straightforward. If your CPAN shell is set up,
-you should just be able to do
+      my @modules = @{ $collect->modules };
+      for my $module (@modules) {
+          print $module->path;    # package fuke oatg
+          print $module->package; # package name
+          $module->require;       # require package
+          my $obj = $module->new; # aliae for $module->package->new
+      }
 
-    % cpan Module::Collect
+DESCRIPTION
+    The following directory composition
 
-Download it, unpack it, then build it as per the usual:
+      $ ls -R t/plugins
+      t/plugins:
+      empty.pm  foo  foo.pm  pod.pm  withcomment.pm  withpod.pm
 
-    % perl Makefile.PL
-    % make && make test
+      t/plugins/foo:
+      bar.pm  baz.plugin
 
-Then install it:
+    The following code is executed
 
-    % make install
+      use strict;
+      use warnings;
+      use Module::Collect;
+      use Perl6::Say;
 
-DOCUMENTATION
+      my $c = Module::Collect->new( path => 't/plugins' );
+      for my $module (@{ $c->modules }) {
+          say $module->package . ', ', $module->path;
+          $module->require;
+      }
 
-Module::Collect documentation is available as in POD. So you can do:
+    results
 
-    % perldoc Module::Collect
+      MyApp::Foo, t/plugins/foo.pm
+      With::Comment, t/plugins/withcomment.pm
+      With::Pod, t/plugins/withpod.pm
+      MyApp::Foo::Bar, t/plugins/foo/bar.pm
 
-to read the documentation online with your favorite pager.
+AUTHOR
+    Kazuhiro Osawa <ko@yappo.ne.jp>
 
-Kazuhiro Osawa
+INSPIRED BY
+    Plagger, Module::Pluggable
+
+SEE ALSO
+    Module::Collect::Package
+
+REPOSITORY
+      svn co http://svn.coderepos.org/share/lang/perl/Module-Collect/trunk Module-Collect
+
+    Module::Collect is Subversion repository is hosted at
+    <http://coderepos.org/share/>. patches and collaborators are welcome.
+
+LICENSE
+    This library is free software; you can redistribute it and/or modify it
+    under the same terms as Perl itself.
+
