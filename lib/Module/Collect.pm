@@ -57,34 +57,22 @@ sub _extract_package {
     $prefix .= '::' if $prefix;
     $prefix = '' unless $prefix;
 
-    return _extract_multiple_package($fh, $prefix) if $self->{multiple};
-    my $in_pod = 0;
-    while (<$fh>) {
-        $in_pod = 1 if m/^=\w/;
-        $in_pod = 0 if /^=cut/;
-        next if ($in_pod || /^=cut/);  # skip pod text
-        next if /^\s*\#/;
-
-        /^\s*package\s+($prefix.*?)\s*;/ and return $1;
-    }
-    return;
-}
-
-sub _extract_multiple_package {
-    my($fh, $prefix) = @_;
-
-    my $in_pod = 0;
+    my $multiple = $self->{multiple};
     my @packages;
-    while (<$fh>) {
-        $in_pod = 1 if m/^=\w/;
-        $in_pod = 0 if /^=cut/;
-        next if ($in_pod || /^=cut/);  # skip pod text
-        next if /^\s*\#/;
 
-        /^\s*package\s+($prefix.*?)\s*;/ and push @packages, $1;
+    while (<$fh>) {
+        next if /\A =\w/xms .. /\A =cut \b/xms; # skip pod sections
+        next if /\A \s* \#/xms;                 # skip comments
+
+        if(/\A \s* package \s+ ($prefix \S*) \s* ;/xms){
+            push @packages, $1;
+
+            last unless $multiple;
+        }
     }
     return @packages;
 }
+
 
 sub modules {
     my $self = shift;
