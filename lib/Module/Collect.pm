@@ -1,4 +1,5 @@
 package Module::Collect;
+use 5.006_002;
 use strict;
 use warnings;
 our $VERSION = '0.05';
