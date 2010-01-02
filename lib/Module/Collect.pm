@@ -5,7 +5,7 @@ our $VERSION = '0.05';
 
 use Carp;
 use File::Find::Rule;
-use File::Spec::Functions qw/catfile/;
+use File::Spec;
 use Module::Collect::Package;
 
 sub new {
@@ -26,16 +26,13 @@ sub _find_modules {
     my $path = $self->{path} || [];
        $path = [ $path ] unless ref($path) eq 'ARRAY';
 
+    my $rule = File::Find::Rule->file->name($self->{pattern});
+
     for my $dirpath (@{ $path }) {
         next unless -d $dirpath;
 
-        my $rule = File::Find::Rule->new;
-        $rule->file;
-        $rule->name($self->{pattern});
-
-        my @modules = map {catfile $_} $rule->in($dirpath);
-        for my $modulefile (@modules) {
-            $self->_add_module($modulefile);
+        for my $modulefile ($rule->in($dirpath)) {
+            $self->_add_module(File::Spec->canonpath($modulefile));
         }
     }
 }
