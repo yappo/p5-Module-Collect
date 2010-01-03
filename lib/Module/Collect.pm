@@ -15,7 +15,14 @@ sub new {
     my($class, %args) = @_;
 
     $args{modules}   = [];
-    $args{pattern} ||= '*.pm' unless $args{pattern};
+    $args{pattern} ||= '*.pm';
+
+    if($args{prefix}){
+        $args{prefix} .= '::';
+    }
+    else{
+        $args{prefix} = '';
+    }
 
     my $self = bless { %args }, $class;
     $self->_find_modules;
@@ -65,15 +72,12 @@ sub _extract_package {
 
     open my $fh, '<', $modulefile or croak "$modulefile: $!";
     my $prefix = $self->{prefix};
-    $prefix .= '::' if $prefix;
-    $prefix = '' unless $prefix;
 
     my $multiple = $self->{multiple};
     my @packages;
 
     while (<$fh>) {
         next if /\A =\w/xms .. /\A =cut \b/xms; # skip pod sections
-        next if /\A \s* \#/xms;                 # skip comments
 
         if(/\A \s* package \s+ ($prefix \S*) \s* ;/xms){
             push @packages, $1;
