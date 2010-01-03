@@ -101,16 +101,16 @@ __END__
 
 =head1 NAME
 
-Module::Collect - module files are collected from some directories
+Module::Collect - Collect sub-modules in directories
 
 =head1 SYNOPSIS
 
   use Module::Collect;
   my $collect = Module::Collect->new(
-      path   => '/foo/bar/plugins',
-      prefix => 'MyApp::Plugin', # not required option
-      pattern => '*.pm',         # not required option
-      multiple => 1,             # not required option see t/06_multiple.t
+      path     => '/foo/bar/plugins',
+      prefix   => 'MyApp::Plugin', # optional
+      pattern  => '*.pm',          # optional
+      multiple => 1,               # optional, see t/06_multiple.t
   );
 
   my @modules = @{ $collect->modules };
@@ -122,6 +122,8 @@ Module::Collect - module files are collected from some directories
   }
 
 =head1 DESCRIPTION
+
+Module::Collect finds sub-modules, or plugins in directories.
 
 The following directory composition
 
