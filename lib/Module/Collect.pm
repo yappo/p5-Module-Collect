@@ -4,16 +4,18 @@ use strict;
 use warnings;
 our $VERSION = '0.05';
 
+use Text::Glob qw(glob_to_regex);
+
 use Carp;
-use File::Find::Rule;
+use File::Find;
 use File::Spec;
 use Module::Collect::Package;
 
 sub new {
     my($class, %args) = @_;
 
-    $args{modules}  = [];
-    $args{pattern} = '*.pm' unless $args{pattern};
+    $args{modules}   = [];
+    $args{pattern} ||= '*.pm' unless $args{pattern};
 
     my $self = bless { %args }, $class;
     $self->_find_modules;
@@ -24,17 +26,25 @@ sub new {
 sub _find_modules {
     my $self = shift;
 
-    my $path = $self->{path} || [];
-       $path = [ $path ] unless ref($path) eq 'ARRAY';
+    my $path = $self->{path} || return;
 
-    my $rule = File::Find::Rule->file->name($self->{pattern});
+    my $pattern = glob_to_regex($self->{pattern});
 
-    for my $dirpath (@{ $path }) {
-        next unless -d $dirpath;
+    my @modules;
 
-        for my $modulefile ($rule->in($dirpath)) {
-            $self->_add_module(File::Spec->canonpath($modulefile));
-        }
+    my $wanted  = sub{
+        return unless -f;
+        return unless /$pattern/;
+        push @modules, File::Spec->canonpath($File::Find::name);
+    };
+
+    foreach my $dir(ref($path) ? @{$path} : $path){
+        next unless -d $dir;
+        find($wanted, $dir);
+    }
+
+    foreach my $modulefile(@modules){
+        $self->_add_module($modulefile);
     }
 }
 
