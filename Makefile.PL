@@ -4,7 +4,7 @@ all_from        'lib/Module/Collect.pm';
 readme_from     'lib/Module/Collect.pm';
 readme_pod_from 'lib/Module/Collect.pm';
 
-requires 'File::Find::Rule';
+requires 'Text::Glob' => 0.07;
 requires 'Carp';
 requires 'File::Spec';
 
