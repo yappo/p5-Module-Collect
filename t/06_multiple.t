@@ -23,9 +23,9 @@ is $collect->modules->[2]->package, 'ThreeBar';
 do {
     my ($module) = grep { $_->package eq 'Three::Bar' } @{ $collect->modules };
     isa_ok $module, 'Module::Collect::Package';
-    ok !grep { $_ eq catfile('t', 'plugin3', 'three.pm') } keys %INC;
+    ok !grep { catfile($_) eq catfile('t', 'plugin3', 'three.pm') } keys %INC;
     ok $module->require;
-    ok grep { $_ eq catfile('t', 'plugin3', 'three.pm') } keys %INC;
+    ok grep { catfile($_) eq catfile('t', 'plugin3', 'three.pm') } keys %INC;
 
     my $obj = $module->new({ three => 3 });
     ok $obj;
@@ -37,9 +37,9 @@ do {
     # ThreeBar
     my ($module) = grep { $_->package eq 'ThreeBar' } @{ $collect->modules };
     isa_ok $module, 'Module::Collect::Package';
-    ok grep { $_ eq catfile('t', 'plugin3', 'three.pm') } keys %INC;
+    ok grep { catfile($_) eq catfile('t', 'plugin3', 'three.pm') } keys %INC;
     ok $module->require;
-    ok grep { $_ eq catfile('t', 'plugin3', 'three.pm') } keys %INC;
+    ok grep { catfile($_) eq catfile('t', 'plugin3', 'three.pm') } keys %INC;
 
     my $obj = $module->new({ three => 3 });
     ok $obj;

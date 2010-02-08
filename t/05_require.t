@@ -11,7 +11,7 @@ my $collect = Module::Collect->new( path => [ catfile('t', 'plugin1'), catfile('
 my($module) = grep { $_->package eq 'One' } @{ $collect->modules };
 isa_ok $module, 'Module::Collect::Package';
 ok $module->require;
-ok grep {$_ eq catfile('t', 'plugin1', 'one.pm')} keys %INC;
+ok grep {catfile($_) eq catfile('t', 'plugin1', 'one.pm')} keys %INC;
 
 my $obj = $module->new;
 ok $obj;
@@ -28,7 +28,7 @@ do {
     like $@, qr/Can't locate object method "new" via package "Two"/;
 };
 is $module2->package->two, 2;
-is $module2->path, catfile(qw/ t plugin2 two.pm/);
+is catfile($module2->path), catfile(qw/ t plugin2 two.pm/);
 is $module2->package, 'Two';
 
 my($module3) = grep { $_->package eq 'two2' } @{ $collect->modules };
