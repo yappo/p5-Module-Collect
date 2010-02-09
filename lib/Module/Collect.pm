@@ -45,7 +45,7 @@ sub _find_modules {
         push @modules, File::Spec->canonpath($File::Find::name);
     };
 
-    for my $dir(ref($path) ? @{$path} : $path){
+    for my $dir(ref($path) eq 'ARRAY' ? @{$path} : $path){
         next unless -d $dir;
         find($wanted, $dir);
     }
