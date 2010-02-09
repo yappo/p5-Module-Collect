@@ -158,6 +158,10 @@ results
 
 Kazuhiro Osawa E<lt>ko@yappo.ne.jpE<gt>
 
+lopnor
+
+gfx
+
 =head1 INSPIRED BY
 
 L<Plagger>, L<Module::Pluggable>

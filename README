@@ -53,6 +53,8 @@ DESCRIPTION
 AUTHOR
     Kazuhiro Osawa <ko@yappo.ne.jp>
 
+    gfx
+
 INSPIRED BY
     Plagger, Module::Pluggable
 
@@ -60,10 +62,11 @@ SEE ALSO
     Module::Collect::Package
 
 REPOSITORY
-      svn co http://svn.coderepos.org/share/lang/perl/Module-Collect/trunk Module-Collect
+      git clone git://github.com/yappo/p5-Module-Collect.git
 
-    Module::Collect is Subversion repository is hosted at
-    <http://coderepos.org/share/>. patches and collaborators are welcome.
+    Module::Collect is git repository is hosted at
+    <http://github.com/yappo/p5-Module-Collect>. patches and collaborators
+    are welcome.
 
 LICENSE
     This library is free software; you can redistribute it and/or modify it
