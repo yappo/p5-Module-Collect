@@ -59,7 +59,11 @@ results
 
 Kazuhiro Osawa E<lt>ko@yappo.ne.jpE<gt>
 
+lopnor
+
 gfx
+
+mattn
 
 =head1 INSPIRED BY
 
