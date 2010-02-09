@@ -8,3 +8,5 @@ __DATA__
 Kazuhiro Osawa
 Module::Collect
 lopnor
+plugins
+
