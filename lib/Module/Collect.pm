@@ -45,12 +45,12 @@ sub _find_modules {
         push @modules, File::Spec->canonpath($File::Find::name);
     };
 
-    foreach my $dir(ref($path) ? @{$path} : $path){
+    for my $dir(ref($path) ? @{$path} : $path){
         next unless -d $dir;
         find($wanted, $dir);
     }
 
-    foreach my $modulefile(@modules){
+    for my $modulefile(@modules){
         $self->_add_module($modulefile);
     }
 }
