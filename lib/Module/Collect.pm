@@ -168,9 +168,9 @@ L<Module::Collect::Package>
 
 =head1 REPOSITORY
 
-  svn co http://svn.coderepos.org/share/lang/perl/Module-Collect/trunk Module-Collect
+  git clone git://github.com/yappo/p5-Module-Collect.git
 
-Module::Collect is Subversion repository is hosted at L<http://coderepos.org/share/>.
+Module::Collect is git repository is hosted at L<http://github.com/yappo/p5-Module-Collect>.
 patches and collaborators are welcome.
 
 =head1 LICENSE
